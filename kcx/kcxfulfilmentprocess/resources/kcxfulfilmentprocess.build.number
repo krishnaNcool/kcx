@@ -1,0 +1,11 @@
+#Ant properties
+#Wed Sep 29 09:59:39 CEST 2021
+version.api=2105
+vendor=hybris
+group.id=de.hybris.platform
+name=kcxfulfilmentprocess
+description=kcxfulfilmentprocess
+builddate=20210929 0956
+releasedate=20210809 2305
+version=2105.1
+module.name=platform-module

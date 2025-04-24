@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://www.zeroturnaround.com">
+  <classpath>
+    <dir name="/Users/krishna/Developer/SAPCX/CX2205withSpartacus/hybris/bin/custom/kcx/kcxbackoffice/backoffice/classes" />
+  </classpath>
+</application>

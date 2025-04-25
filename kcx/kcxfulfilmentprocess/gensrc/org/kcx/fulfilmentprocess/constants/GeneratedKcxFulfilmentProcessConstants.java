@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 24-Apr-2025, 8:38:41 PM                     ---
+ * --- Generated at 25-Apr-2025, 12:47:42 PM                    ---
  * ----------------------------------------------------------------
  */
 package org.kcx.fulfilmentprocess.constants;

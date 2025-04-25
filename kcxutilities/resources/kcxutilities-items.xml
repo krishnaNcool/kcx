@@ -2,9 +2,6 @@
 <!--
  Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
 -->
-<!--
-	ATTENTION: This is just an example file. You have to edit it according to your needs.
--->
 
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			xsi:noNamespaceSchemaLocation="items.xsd">
@@ -36,5 +33,38 @@
 			</attributes>
 		</itemtype>
 -->
+
+		<!-- Custom Email Process Model -->
+		<itemtype generate="true"
+			code="QueryReportNotificationProcess"
+			extends="StoreFrontCustomerProcess"
+			autocreate="true">
+			<attributes>
+				<attribute qualifier="message" type="java.lang.String">
+					<description>The message to be sent in the notification email</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="subject" type="java.lang.String">
+					<description>The subject of the notification email</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="query" type="java.lang.String">
+					<description>The query of the notification email</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="headerFieldNames" type="StringCollection">
+					<description>The headerNames of the  report excel notification email</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="dateTypeOfFieldName" type="StringCollection">
+					<description>The query of the notification email</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="report" type="CatalogUnawareMedia">
+					<description>The report of the notification email</description>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
 	</itemtypes>
 </items>

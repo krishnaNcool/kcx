@@ -11,7 +11,8 @@
                 		
         
         <requires-extension name="commercewebservices"/>
-                		
+        <requires-extension name="acceleratorcms"/>
+
         
         <coremodule generated="true" manager="com.kcxutilities.jalo.KcxutilitiesManager" packageroot="com.kcxutilities"/>
                 		

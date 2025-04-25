@@ -15,4 +15,20 @@
 
     <context:annotation-config/>
 
+	<bean id="generateQueryReportNotificationEmailDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/kcxutilities/processes/queryReportNotificationEmail.xml" />
+	</bean>
+
+	<bean id="generateQueryReportNotificationEmailAction" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="QueryReportNotificationEmailTemplate"/>
+	</bean>
+
+	<bean id="queryReportNotificationEventListener" class="com.kcxutilities.core.event.eventListener.QueryReportNotificationEventListener">
+		<!-- Dependencies are injected via @Resource annotations -->
+	</bean>
+	
+	<bean id="queryReportNotificationEmailContext" class="com.kcxutilities.core.process.email.context.QueryReportNotificationEmailContext" scope="prototype">
+		<!-- Dependencies are injected via @Resource annotations -->
+	</bean>
+
 </beans>

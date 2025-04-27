@@ -16,7 +16,7 @@
     <context:annotation-config/>
 
 	<bean id="generateQueryReportNotificationEmailDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
-		<property name="resource" value="classpath:/kcxutilities/processes/queryReportNotificationEmail.xml" />
+		<property name="resource" value="classpath:/kcxutilities/processes/queryReportNotificationEmailProcess.xml" />
 	</bean>
 
 	<bean id="generateQueryReportNotificationEmailAction" parent="abstractGenerateEmailAction">
@@ -29,6 +29,19 @@
 	
 	<bean id="queryReportNotificationEmailContext" class="com.kcxutilities.core.process.email.context.QueryReportNotificationEmailContext" scope="prototype">
 		<!-- Dependencies are injected via @Resource annotations -->
+	</bean>
+
+	<!-- Custom Query Notification Cron Job -->
+	<bean id="cronJobNotificationDao" class="com.kcxutilities.core.dao.DefaultCronJobNotificationDao">
+		<!-- Dependencies are injected via @Resource annotations -->
+	</bean>
+	
+	<bean id="cronJobNotificationService" class="com.kcxutilities.core.service.DefaultCronJobNotificationService">
+		<!-- Dependencies are injected via @Resource annotations -->
+	</bean>
+	
+	<bean id="customQueryNotificationJob" class="com.kcxutilities.core.job.CustomQueryNotificationJob">
+		<property name="cronJobNotificationService" ref="cronJobNotificationService"/>
 	</bean>
 
 </beans>

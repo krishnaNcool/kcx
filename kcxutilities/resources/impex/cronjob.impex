@@ -1,0 +1,15 @@
+# Create a ServicelayerJob
+INSERT_UPDATE ServicelayerJob;code[unique=true];springId
+                             ;customQueryNotificationJob;customQueryNotificationJob
+
+# Create a CustomQueryNotificationCronJob with a simplified FlexibleSearch query
+INSERT_UPDATE CustomQueryNotificationCronJob;code[unique=true];job(code);customQuery;subject;sessionLanguage(isocode);sessionCurrency(isocode);sessionUser(uid)
+                                            ;customQueryCronJob;customQueryNotificationJob;"SELECT {pk}, {code}, {creationtime}, {totalPrice} FROM {Order}";"Order Report";en;USD;admin
+
+# Add field names and class types for the query results
+INSERT_UPDATE CustomQueryNotificationCronJob;code[unique=true];fieldNames(item)[mode=append];fieldClassType(item)[mode=append]
+                                            ;customQueryCronJob;Order PK,Order Code,Creation Date,Total Price;java.lang.String,java.lang.String,java.util.Date,java.lang.Double
+
+# Optional: Add email addresses if needed
+INSERT_UPDATE CustomQueryNotificationCronJob;code[unique=true];toAddresses[mode=append];ccAddresses(item)[mode=append]
+                                            ;customQueryCronJob;admin@example.com;support@example.com

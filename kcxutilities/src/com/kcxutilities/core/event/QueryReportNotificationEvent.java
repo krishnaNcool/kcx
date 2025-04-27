@@ -1,50 +1,43 @@
 package com.kcxutilities.core.event;
 
-import de.hybris.platform.catalog.model.CatalogUnawareMediaModel;
+import de.hybris.platform.acceleratorservices.model.email.EmailAttachmentModel;
 import de.hybris.platform.servicelayer.event.events.AbstractEvent;
-
-import java.util.Collection;
+import java.util.List;
 
 public class QueryReportNotificationEvent extends AbstractEvent {
-    private final String message;
-    private final String subject;
-    private final String query;
-    private final Collection<String> headerFieldNames;
-    private final Collection<String> dateTypeOfFieldName;
-    private final CatalogUnawareMediaModel report;
 
-    public QueryReportNotificationEvent(final String message, final String subject, final String query,
-                                        final Collection<String> headerFieldNames, final Collection<String> dateTypeOfFieldName,
-                                        final CatalogUnawareMediaModel report) {
-        this.message = message;
+    private final List<EmailAttachmentModel> attachmentList;
+    private final List<String> toAddresses;
+    private final List<String> ccAddressList;
+    private final String queryName;
+    private final String subject;
+
+    public QueryReportNotificationEvent(List<EmailAttachmentModel> attachmentList, List<String> toAddresses, 
+                                       List<String> ccAddressList, String queryName, String subject) {
+        this.attachmentList = attachmentList;
+        this.toAddresses = toAddresses;
+        this.ccAddressList = ccAddressList;
+        this.queryName = queryName;
         this.subject = subject;
-        this.query = query;
-        this.headerFieldNames = headerFieldNames;
-        this.dateTypeOfFieldName = dateTypeOfFieldName;
-        this.report = report;
     }
 
-    public String getMessage() {
-        return message;
+    public List<EmailAttachmentModel> getAttachmentList() {
+        return attachmentList;
+    }
+
+    public List<String> getToAddresses() {
+        return toAddresses;
+    }
+
+    public List<String> getCcAddressList() {
+        return ccAddressList;
+    }
+
+    public String getQueryName() {
+        return queryName;
     }
 
     public String getSubject() {
         return subject;
-    }
-
-    public String getQuery() {
-        return query;
-    }
-
-    public Collection<String> getHeaderFieldNames() {
-        return headerFieldNames;
-    }
-
-    public Collection<String> getDateTypeOfFieldName() {
-        return dateTypeOfFieldName;
-    }
-
-    public CatalogUnawareMediaModel getReport() {
-        return report;
     }
 }

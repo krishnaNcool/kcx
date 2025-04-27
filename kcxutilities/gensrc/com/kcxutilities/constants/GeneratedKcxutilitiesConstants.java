@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 25-Apr-2025, 7:46:07 PM                     ---
+ * --- Generated at 26-Apr-2025, 11:58:45 PM                    ---
  * ----------------------------------------------------------------
  */
 package com.kcxutilities.constants;
@@ -16,6 +16,7 @@ public class GeneratedKcxutilitiesConstants
 	public static final String EXTENSIONNAME = "kcxutilities";
 	public static class TC
 	{
+		public static final String CUSTOMQUERYNOTIFICATIONCRONJOB = "CustomQueryNotificationCronJob".intern();
 		public static final String QUERYREPORTNOTIFICATIONPROCESS = "QueryReportNotificationProcess".intern();
 	}
 	public static class Attributes

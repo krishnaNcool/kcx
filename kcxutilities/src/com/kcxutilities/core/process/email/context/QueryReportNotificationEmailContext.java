@@ -36,7 +36,7 @@ public class QueryReportNotificationEmailContext extends AbstractEmailContext<Qu
         // Set data from the process model
         this.message = processModel.getMessage();
         this.subject = processModel.getSubject();
-        this.query = processModel.getQuery();
+//        this.query = processModel.getQuery();
 //        this.headerFieldNames = (List<String>) processModel.getHeaderFieldNames();
 //        this.dateTypeOfFieldName = processModel.getDateTypeOfFieldName();
 //        this.report = processModel.getReport();

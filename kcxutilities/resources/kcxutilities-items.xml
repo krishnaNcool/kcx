@@ -6,6 +6,10 @@
 <items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			xsi:noNamespaceSchemaLocation="items.xsd">
 
+	<collectiontypes>
+		<collectiontype code="EmailAttachmentCollection" elementtype="EmailAttachment" autocreate="true" generate="true"/>
+	</collectiontypes>
+	
 	<itemtypes>
 <!--
 		<itemtype generate="true"
@@ -38,6 +42,7 @@
 		<itemtype generate="true"
 			code="QueryReportNotificationProcess"
 			extends="StoreFrontCustomerProcess"
+			jaloclass="com.kcxutilities.jalo.QueryReportNotificationEmailProcess"
 			autocreate="true">
 			<attributes>
 				<attribute qualifier="message" type="java.lang.String">
@@ -48,23 +53,61 @@
 					<description>The subject of the notification email</description>
 					<persistence type="property"/>
 				</attribute>
-				<attribute qualifier="query" type="java.lang.String">
-					<description>The query of the notification email</description>
-					<persistence type="property"/>
-				</attribute>
-				<attribute qualifier="headerFieldNames" type="StringCollection">
-					<description>The headerNames of the  report excel notification email</description>
-					<persistence type="property"/>
-				</attribute>
-				<attribute qualifier="dateTypeOfFieldName" type="StringCollection">
-					<description>The query of the notification email</description>
-					<persistence type="property"/>
-				</attribute>
 				<attribute qualifier="report" type="CatalogUnawareMedia">
 					<description>The report of the notification email</description>
 					<persistence type="property"/>
 				</attribute>
+				<attribute qualifier="attachments" type="EmailAttachmentCollection">
+					<description>The attachments for the notification email</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="toAddresses" type="StringCollection">
+					<description>The TO addresses for the notification email</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="ccAddresses" type="StringCollection">
+					<description>The CC addresses for the notification email</description>
+					<persistence type="property"/>
+				</attribute>
 			</attributes>
 		</itemtype>
+
+		<!-- Custom Query Notification Cron Job Model -->
+		<itemtype generate="true"
+				  code="CustomQueryNotificationCronJob"
+				  extends="CronJob"
+				  autocreate="true">
+			<attributes>
+				<attribute qualifier="customQuery" type="java.lang.String">
+					<description>The custom query to be executed</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="parameters" type="StringCollection">
+					<description>The parameters for the custom query</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="fieldClassType" type="StringCollection">
+					<description>The class types of the fields in the query result</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="fieldNames" type="StringCollection">
+					<description>The names of the fields in the query result</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="subject" type="java.lang.String">
+					<description>The subject of the notification email</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="ccAddresses" type="StringCollection">
+					<description>The CC addresses for the notification email</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="toAddresses" type="StringCollection">
+					<description>The TO addresses for the notification email</description>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
 	</itemtypes>
 </items>

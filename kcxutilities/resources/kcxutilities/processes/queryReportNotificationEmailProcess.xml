@@ -5,7 +5,7 @@
 <process xmlns="http://www.hybris.de/xsd/processdefinition" start="generateQueryReportNotificationEmail" name="queryReportNotificationEmailProcess"
          processClass="com.kcxutilities.jalo.QueryReportNotificationEmailProcess" onError="error">
 
-    <action id="generateQueryReportNotificationEmail" bean="generateQueryReportNotificationEmail">
+    <action id="generateQueryReportNotificationEmail" bean="generateQueryReportNotificationEmailAction">
         <transition name="OK" to="sendEmail"/>
         <transition name="NOK" to="error"/>
     </action>

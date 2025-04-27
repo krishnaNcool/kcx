@@ -7,6 +7,7 @@ package com.kcxutilities.constants;
 public class KcxutilitiesConstants extends GeneratedKcxutilitiesConstants
 {
 	public static final String EXTENSIONNAME = "kcxutilities";
+	public static final String FOLDER_EMAIL_ATTACHMENTS = "emailAttachments";
 
 	private KcxutilitiesConstants()
 	{

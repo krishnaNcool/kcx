@@ -1,0 +1,28 @@
+# Define macros
+$contentCatalog=kcxContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+$defaultLanguage=en
+
+# Create the Content Catalog
+INSERT_UPDATE ContentCatalog;id[unique=true];name[lang=$defaultLanguage]
+                     ;$contentCatalog;KCX Content Catalog
+
+# Create Catalog Version
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];active;defaultCurrency(isocode)
+                            ;$contentCatalog;Staged;true;USD
+                            ;$contentCatalog;Online;true;USD
+
+INSERT_UPDATE CMSSite;uid[unique=true];name[lang=en];contentCatalogs(id);defaultCatalog(id);active
+                     ;kcx;KCX CMS Site;kcxContentCatalog;kcxContentCatalog;true
+
+# Create a new BaseStore with the name "kcx"
+INSERT_UPDATE BaseStore;uid[unique=true];name;defaultCurrency(isocode);net;catalogs
+                       ;kcx;kcxStoreUid;USD;true;kcxContentCatalog
+
+# Create a new BaseSite with the name "kcx"
+INSERT_UPDATE BaseSite;uid[unique=true];name;stores(uid);channel(code);
+                      ;kcx;kcxSiteUid;kcxStoreUid;B2B
+
+# Create the media folder for email attachments
+INSERT_UPDATE MediaFolder;qualifier[unique=true];path
+                         ;emailAttachments;emailAttachments

@@ -3,7 +3,7 @@
  Custom Email Process for Query Report Notification
 -->
 <process xmlns="http://www.hybris.de/xsd/processdefinition" start="generateQueryReportNotificationEmail" name="queryReportNotificationEmailProcess"
-         processClass="com.kcxutilities.jalo.QueryReportNotificationEmailProcess" onError="error">
+         processClass="com.kcxutilities.model.QueryReportNotificationProcessModel" onError="error">
 
     <action id="generateQueryReportNotificationEmail" bean="generateQueryReportNotificationEmailAction">
         <transition name="OK" to="sendEmail"/>

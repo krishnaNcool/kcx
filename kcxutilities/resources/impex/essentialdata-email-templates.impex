@@ -15,40 +15,22 @@ $contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCata
 $defaultLanguage=en
 $emailResource=jar:com.kcxutilities.constants.KcxutilitiesConstants&/kcxutilities/email-templates
 $emailPackageName=com.kcxutilities.core.process.email.context
+$wideContent=CMSImageComponent,BannerComponent
+$lang=en
 
-# Create the Content Catalog
-INSERT_UPDATE Catalog;id[unique=true];name[lang=$defaultLanguage]
-                     ;$contentCatalog;KCX Content Catalog
-
-# Create Catalog Version
-INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];active;defaultCurrency(isocode)
-                            ;$contentCatalog;Staged;true;USD
-                            ;$contentCatalog;Online;true;USD
-
-# Create Email Page Templates
-INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code);active
-                               ;;QueryReportNotificationEmailTemplate;Query Report Notification Email Template;queryReportNotificationEmailTemplate;queryReportNotificationEmailSubject;queryReportNotificationEmailBody;EmailPage;true
-
-# Create Email Pages
-INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid, $contentCV);defaultPage;approvalStatus(code)[default='approved']
-                       ;;QueryReportNotificationEmail;Query Report Notification Email;QueryReportNotificationEmailTemplate;true;
 
 # Create Email Velocity Templates
-INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
-                              ;queryReportNotificationEmailBody;$emailPackageName.QueryReportNotificationEmailContext;
-                              ;queryReportNotificationEmailSubject;$emailPackageName.QueryReportNotificationEmailContext;
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;templateScript[lang=$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator];rendererType(code)[default='velocity']
+                              ;queryReportNotificationEmailBody;$emailPackageName.QueryReportNotificationEmailContext;$emailResource/queryReportNotificationEmailBody.vm ;
+                              ;queryReportNotificationEmailSubject;$emailPackageName.QueryReportNotificationEmailContext;$emailResource/queryReportNotificationEmailSubject.vm ;
 
-# Create the email content media
-INSERT_UPDATE MediaFolder;qualifier[unique=true];path[unique=true]
-                         ;email-body;email-body
+# Update the templates with content from resources
 
-# Create Media for email templates
-INSERT_UPDATE Media;mediaFormat(qualifier);code[unique=true];$contentCV[unique=true];mime;realfilename;folder(qualifier)[default='email-body']
-                   ;;queryReportNotificationEmailBody;;text/html;queryReportNotificationEmailBody.vm;
-                   ;;queryReportNotificationEmailSubject;;text/plain;queryReportNotificationEmailSubject.vm;
+# Create Email Page Templates
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+                               ;;QueryReportNotificationsEmailTemplate;Query Report Notification Email Template;true;queryReportNotificationEmailTemplate;queryReportNotificationEmailSubject;queryReportNotificationEmailBody;EmailPage
 
-# Update the media with the content from the resources
-# Note: This uses a special syntax to load content from resources
-UPDATE Media;code[unique=true];$contentCV[unique=true];@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
-            ;queryReportNotificationEmailBody;;$emailResource/queryReportNotificationEmailBody.vm
-            ;queryReportNotificationEmailSubject;;$emailResource/queryReportNotificationEmailSubject.vm
+# Create Email Pages
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved'];fromEmail[lang=en];fromName[lang=en]
+                       ;;QueryReportNotificationEmail;Query Report Notification Email;QueryReportNotificationEmailTemplate;true;;noreply@kcx.com;KCX System
+

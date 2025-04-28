@@ -10,83 +10,60 @@ import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.user.UserService;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Context for generating query report notification emails.
  */
-public class QueryReportNotificationEmailContext extends AbstractEmailContext<QueryReportNotificationProcessModel> {
+public class QueryReportNotificationEmailContext extends AbstractEmailContext<QueryReportNotificationProcessModel>
+{
     @Resource(name = "modelService")
     private ModelService modelService;
-    
+
     @Resource(name = "userService")
     private UserService userService;
-    
-    private String message;
-    private String subject;
-    private String query;
-    private List<String> headerFieldNames;
-    private String dateTypeOfFieldName;
-    private String report;
 
     @Override
-    public void init(final QueryReportNotificationProcessModel processModel, final EmailPageModel emailPageModel) {
+    public void init(final QueryReportNotificationProcessModel processModel, final EmailPageModel emailPageModel)
+    {
         super.init(processModel, emailPageModel);
-        
-        // Set data from the process model
-        this.message = processModel.getMessage();
-        this.subject = processModel.getSubject();
-//        this.query = processModel.getQuery();
-//        this.headerFieldNames = (List<String>) processModel.getHeaderFieldNames();
-//        this.dateTypeOfFieldName = processModel.getDateTypeOfFieldName();
-//        this.report = processModel.getReport();
 
+        if (processModel != null)
+        {
+            put("subject", processModel.getSubject() != null ? processModel.getSubject() : "No Subject");
+
+            final Collection<String> toAddresses = processModel.getToAddresses();
+            if (toAddresses != null && !toAddresses.isEmpty()) {
+                put("toEmail", toAddresses.stream().findFirst().orElse("")); // Default to empty string if no email
+                put("toEmails", toAddresses);
+            } else {
+                throw new IllegalStateException("Missing ToEmail in AbstractEmailContext");
+            }
+        }
     }
 
     @Override
-    protected BaseSiteModel getSite(final QueryReportNotificationProcessModel processModel) {
-        return processModel.getSite();
+    protected BaseSiteModel getSite(final QueryReportNotificationProcessModel processModel)
+    {
+        return processModel != null ? processModel.getSite() : null;
     }
 
     @Override
-    protected CustomerModel getCustomer(final QueryReportNotificationProcessModel processModel) {
-        return (CustomerModel) getUserService().getUserForUID("admin");
+    protected CustomerModel getCustomer(final QueryReportNotificationProcessModel processModel)
+    {
+        return null; // Avoid using the customer as the recipient
+    }
+
+    protected List<String> getToEmails(final QueryReportNotificationProcessModel processModel) {
+        return processModel != null && processModel.getToAddresses() != null
+                ? List.copyOf(processModel.getToAddresses())
+                : List.of();
     }
 
     @Override
-    protected LanguageModel getEmailLanguage(final QueryReportNotificationProcessModel processModel) {
-        return processModel.getLanguage();
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public String getQuery() {
-        return query;
-    }
-
-    public List<String> getHeaderFieldNames() {
-        return headerFieldNames;
-    }
-
-    public String getDateTypeOfFieldName() {
-        return dateTypeOfFieldName;
-    }
-
-    public String getReport() {
-        return report;
-    }
-
-    public ModelService getModelService() {
-        return modelService;
-    }
-
-    public UserService getUserService() {
-        return userService;
+    protected LanguageModel getEmailLanguage(final QueryReportNotificationProcessModel processModel)
+    {
+        return processModel != null ? processModel.getLanguage() : null;
     }
 }

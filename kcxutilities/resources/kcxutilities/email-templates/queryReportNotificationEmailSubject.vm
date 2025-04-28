@@ -1,1 +1,1 @@
-$ctx.subject
+${ctx.messages.emailSubject}

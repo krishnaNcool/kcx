@@ -6,11 +6,14 @@ import com.kcxutilities.core.event.QueryReportNotificationEvent;
 import com.kcxutilities.model.CustomQueryNotificationCronJobModel;
 import de.hybris.platform.acceleratorservices.model.email.EmailAttachmentModel;
 import de.hybris.platform.basecommerce.model.site.BaseSiteModel;
+import de.hybris.platform.core.model.c2l.CurrencyModel;
+import de.hybris.platform.core.model.c2l.LanguageModel;
 import de.hybris.platform.servicelayer.event.EventService;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import de.hybris.platform.servicelayer.media.MediaService;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.site.BaseSiteService;
+import de.hybris.platform.store.BaseStoreModel;
 import de.hybris.platform.store.services.BaseStoreService;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.*;
@@ -83,10 +86,17 @@ public class DefaultCronJobNotificationService {
         List<EmailAttachmentModel> attachmentList = Collections.singletonList(attachment);
         List<String> ccAddressList = new ArrayList<>(cronjob.getCcAddresses());
         List<String> toAddresses = new ArrayList<>(cronjob.getToAddresses());
-
+        BaseSiteModel baseSiteModel = baseSiteService.getBaseSiteForUID("kcx");
+        BaseStoreModel baseStoreModel = baseStoreService.getBaseStoreForUid("kcx");
+        CurrencyModel currencyModel = commonI18NService.getCurrentCurrency();
+        LanguageModel languageModel = commonI18NService.getCurrentLanguage();
         String queryName = cronjob.getSubject();
 
         eventService.publishEvent(new QueryReportNotificationEvent(
+                        baseStoreModel,
+                        baseSiteModel,
+                        currencyModel,
+                        languageModel,
                         attachmentList,
                         toAddresses,
                         ccAddressList,
